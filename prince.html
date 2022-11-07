@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+    integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk"
+    crossorigin="anonymous"></script>
+
+  <title>prince</title>
+  <style>
+    body{
+      background-color: rgb(211, 208, 208);
+    }
+    .row{
+      display: flex;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container mt-5">
+    <h2>CONVERT CASE</h2>
+    <textarea placeholder="enter own word" style="width: 99%; height: 150px;"></textarea>
+    <button type="button" id="sentencecase">Sentence case</button>
+    <button type="button" id="lowercase">lower case</button>
+    <button type="button" id="uppercase">UPPER CASE</button>
+    <button type="button" id="titlecase">TITLE CASE</button>
+    <button type="button" id="alternatingcase">ALTERNATING CAsE</button>
+    <button type="button" id="inversecase">INVERSE CASE</button>
+    <p>Character Count : <span id="charactercount"></span> </p>
+    <br>
+    <br>
+    <hr>
+    <div class="row">
+      <form class="col-md-3">
+        <h4>TITLE CASE</h4>
+        Input:
+        <br /><textarea name="input" onchange="form.output.value=toTitleCase(this.value)"
+          onkeyup="form.output.value=toTitleCase(this.value)"></textarea>
+        <br />Output:
+        <br /><textarea name="output" readonly onclick="select(this)"></textarea>
+      </form>
+      <form class="col-md-3">
+
+        <h4>UPPER CASE</h4>
+        Input:
+        <br /><textarea name="input" onchange="form.output.value=toUpperCase(this.value)"
+          onkeyup="form.output.value=toUpperCase(this.value)"></textarea>
+        <br />Output:
+        <br /><textarea name="output" readonly onclick="select(this)"></textarea>
+      </form>
+      <form class="col-md-3">
+
+        <h4>LOWER CASE</h4>
+        Input:
+        <br /><textarea name="input" onchange="form.output.value=toLowerCase(this.value)"
+          onkeyup="form.output.value=toLowerCase(this.value)"></textarea>
+        <br />Output:
+        <br /><textarea name="output" readonly onclick="select(this)"></textarea>
+      </form>
+      <form class="col-md-3">
+
+        <h4>TITLE CASE</h4>
+        Input:
+        <br /><textarea name="input" onchange="form.output.value=toSentenceCase(this.value)"
+          onkeyup="form.output.value=toSentenceCase(this.value)"></textarea>
+        <br />Output:
+        <br /><textarea name="output" readonly onclick="select(this)"></textarea>
+      </form>
+    </div>
+  </div>
+</body>
+
+<script>
+  function toTitleCase(str) {
+    return str.replace(
+      /\w\S*/g,
+      function (txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+      }
+    );
+  }
+  function toUpperCase(str) {
+    return str.replace(
+      /\w\S*/g,
+      function (txt) {
+        return txt.toUpperCase();
+      }
+    );
+  }
+  function toLowerCase(str) {
+    return str.replace(
+      /\w\S*/g,
+      function (txt) {
+        return txt.toLowerCase();
+      }
+    );
+  }
+  function toSentenceCase(str) {
+    return str.replace(
+      /\w\S*/g,
+      function (txt) {
+        return txt.charAt(0).toUpperCase();
+      }
+    );
+  }</script>
+<script type="text/javascript">
+  // Load function every 0 second
+  setInterval(function () {
+    textarea();
+    charactercount();
+  }, 0);
+
+  function textarea() {
+    return $('textarea').val();
+  }
+
+  function charactercount() {
+    $('#charactercount').text(textarea().length);
+  }
+
+  $('#sentencecase').click(function () {
+    var sentececase = textarea().toLowerCase().replace(/(^\s*\w|[\.\!\?]\s*\w)/g,
+      function (c) {
+        return c.toUpperCase()
+      });
+    $('textarea').val(sentececase);
+  })
+
+  $('#lowercase').click(function () {
+    $('textarea').val(textarea().toLowerCase());
+  })
+
+  $('#uppercase').click(function () {
+    $('textarea').val(textarea().toUpperCase());
+  })
+
+  $('#titlecase').click(function () {
+    text = textarea().toLowerCase().split(' ');
+    for (var i = 0; i < text.length; i++) {
+      text[i] = text[i].charAt(0).toUpperCase() + text[i].slice(1);
+    }
+
+    $('textarea').val(text.join(' '));
+  })
+
+  $('#alternatingcase').click(function () {
+    var text = textarea().toLowerCase().split("");
+    for (var i = 1; i < text.length; i += 2) {
+      text[i] = text[i].toUpperCase();
+    }
+
+    $('textarea').val(text.join(""));
+  })
+
+  $('#inversecase').click(function () {
+    var text = textarea().toLowerCase().split("");
+    for (var i = 0; i < text.length; i += 2) {
+      text[i] = text[i].toUpperCase();
+    }
+
+    $('textarea').val(text.join(""));
+  })
+
+
+</script>
+
+</html>
